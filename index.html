@@ -3,137 +3,228 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐱 Mırnav'ın Macerası - Elif Miray</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<title>🐱 Mırnav'ın Büyük Macerası - Elif Miray</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --pembe: #FFB6C1;
-  --lacivert: #4A69BD;
-  --sari: #F9CA24;
-  --yesil: #78E08F;
-  --mor: #A55EEA;
-  --krem: #FFF5E6;
-  --koyu-pembe: #FF6B81;
+  --gri: #2D3436;
+  --pembe: #FF9FF3;
+  --pembe-koyu: #F368E0;
+  --turuncu: #FECA57;
+  --yesil: #1DD1A1;
+  --lavanta: #A29BFE;
+  --mavi: #54A0FF;
+  --duman: #C8D6E5;
+  --beyaz: #FFFFFF;
+  --gölge: rgba(45, 52, 54, 0.15);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: 'Nunito', sans-serif;
-  background: linear-gradient(180deg, #E8F8F5 0%, #D4EFDF 50%, #A9DFBF 100%);
+  font-family: 'Fredoka', sans-serif;
+  background: 
+    radial-gradient(circle at 20% 80%, var(--pembe) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, var(--lavanta) 0%, transparent 50%),
+    linear-gradient(180deg, #DFE6E9 0%, #B2BEC3 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-.oyun-kutu {
+/* TELEFON ÇERÇEVESİ */
+.telefon {
   width: 100%;
-  max-width: 420px;
-  background: white;
-  border-radius: 30px;
-  box-shadow: 0 20px 60px rgba(74, 105, 189, 0.2);
+  max-width: 380px;
+  height: 100vh;
+  max-height: 780px;
+  background: var(--gri);
+  border-radius: 45px;
+  padding: 12px;
+  box-shadow: 
+    0 0 0 3px #1e1e1e,
+    0 20px 60px rgba(0,0,0,0.4),
+    inset 0 0 30px rgba(255,255,255,0.1);
+  position: relative;
+}
+
+.ekran {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #74b9ff 0%, #a29bfe 50%, #fd79a8 100%);
+  border-radius: 35px;
   overflow: hidden;
   position: relative;
 }
 
-/* Header */
-.header {
-  background: linear-gradient(135deg, var(--pembe) 0%, var(--koyu-pembe) 100%);
-  padding: 20px;
-  text-align: center;
-  position: relative;
-}
-
-.header::after {
-  content: '';
+/* ANASAYFA */
+.anasayfa {
   position: absolute;
-  bottom: -20px;
-  left: 0;
-  right: 0;
-  height: 40px;
-  background: white;
-  border-radius: 50% 50% 0 0;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #74b9ff 0%, #a29bfe 50%, #fd79a8 100%);
+  z-index: 10;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.logo {
+.anasayfa.gizle {
+  transform: scale(0);
+  opacity: 0;
+}
+
+/* YÜZÜK GÖBEK */
+.yuzuk {
+  width: 200px;
+  height: 200px;
+  background: var(--beyaz);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  box-shadow: 
+    0 20px 0 #dfe6e9,
+    0 25px 40px rgba(0,0,0,0.2);
+  margin-bottom: 30px;
+  animation: yuzukYüze 3s ease-in-out infinite;
 }
 
-.kedi-logo {
-  font-size: 3em;
-  filter: drop-shadow(0 3px 5px rgba(0,0,0,0.2));
-  animation: zıpla 1s ease-in-out infinite;
-}
-
-@keyframes zıpla {
+@keyframes yuzukYüze {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-15px); }
 }
 
-.logo h1 {
-  color: white;
-  font-size: 1.8em;
-  font-weight: 900;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+.kedi-anim {
+  font-size: 8em;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
 }
 
-/* Stats Bar */
-.stats {
-  display: flex;
-  justify-content: space-around;
-  padding: 20px 15px 30px;
-  background: white;
-  margin-top: -10px;
-  position: relative;
-  z-index: 1;
-}
-
-.stat {
+/* BAŞLIK */
+.baslik {
   text-align: center;
-  background: var(--krem);
-  padding: 12px 20px;
-  border-radius: 20px;
-  min-width: 90px;
+  margin-bottom: 40px;
 }
 
-.stat-label {
-  font-size: 0.75em;
-  color: #888;
+.baslik h1 {
+  color: var(--beyaz);
+  font-size: 2.2em;
+  text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
+
+.baslik p {
+  color: rgba(255,255,255,0.9);
+  font-size: 1.1em;
+}
+
+/* BUTON */
+.basla-btn {
+  background: var(--turuncu);
+  color: var(--gri);
+  border: none;
+  padding: 18px 60px;
+  border-radius: 50px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.4em;
   font-weight: 700;
+  cursor: pointer;
+  box-shadow: 
+    0 8px 0 #e1b12c,
+    0 15px 30px rgba(0,0,0,0.2);
+  transition: all 0.1s;
 }
 
-.stat-value {
-  font-size: 1.5em;
-  font-weight: 900;
-  color: var(--lacivert);
+.basla-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 11px 0 #e1b12c,
+    0 20px 40px rgba(0,0,0,0.25);
 }
 
-/* Oda / Sahne */
+.basla-btn:active {
+  transform: translateY(4px);
+  box-shadow: 
+    0 4px 0 #e1b12c,
+    0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* OYUN ALANI */
+.oyun-alani {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s;
+}
+
+.oyun-alani.aktif {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* HEADER */
+.oyun-header {
+  background: rgba(255,255,255,0.95);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.logo-mini {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-mini span {
+  font-size: 1.8em;
+}
+
+.logo-mini h2 {
+  font-size: 1em;
+  color: var(--gri);
+}
+
+/* İLERLEME */
+.ilerleme {
+  height: 10px;
+  background: rgba(255,255,255,0.3);
+}
+
+.ilerleme-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--yesil), var(--turuncu));
+  width: 7%;
+  transition: width 0.5s;
+  border-radius: 0 10px 10px 0;
+}
+
+/* SAHNE */
 .sahne {
-  height: 280px;
-  background: linear-gradient(180deg, #87CEEB 0%, #E0F4FF 100%);
+  flex: 1;
   position: relative;
   overflow: hidden;
-  margin: 0 15px;
-  border-radius: 25px;
 }
 
-/* Bulut */
+/* BULUTLAR */
 .bulut {
   position: absolute;
-  background: white;
+  background: var(--beyaz);
   border-radius: 50px;
   opacity: 0.9;
-  animation: bulutHareket 20s linear infinite;
 }
 
-.bulut::before, .bulut::after {
+.bulut::before {
   content: '';
   position: absolute;
   background: inherit;
@@ -141,187 +232,251 @@ body {
 }
 
 .bulut-1 {
-  width: 80px; height: 30px;
-  top: 20px; left: -80px;
+  width: 100px; height: 40px;
+  top: 20px; left: -100px;
+  animation: bulutGit 15s linear infinite;
 }
-.bulut-1::before { width: 35px; height: 35px; top: -15px; left: 15px; }
-.bulut-1::after { width: 25px; height: 25px; top: -10px; left: 40px; }
+
+.bulut-1::before {
+  width: 50px; height: 50px;
+  top: -25px; left: 20px;
+}
 
 .bulut-2 {
-  width: 60px; height: 25px;
-  top: 50px; left: -60px;
-  animation-delay: -7s;
+  width: 80px; height: 30px;
+  top: 60px; left: -80px;
+  animation: bulutGit 20s linear infinite;
+  animation-delay: -5s;
 }
-.bulut-2::before { width: 25px; height: 25px; top: -12px; left: 10px; }
-.bulut-2::after { width: 20px; height: 20px; top: -8px; left: 30px; }
 
-@keyframes bulutHareket {
+.bulut-2::before {
+  width: 35px; height: 35px;
+  top: -18px; left: 15px;
+}
+
+@keyframes bulutGit {
   from { transform: translateX(0); }
-  to { transform: translateX(500px); }
+  to { transform: translateX(450px); }
 }
 
-/* Zemindeki ev */
+/* ZEMİN */
 .zemin {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 80px;
-  background: linear-gradient(180deg, #90EE90 0%, #3CB371 100%);
+  height: 70px;
+}
+
+/* TEPE */
+.tepe {
+  position: absolute;
+  bottom: 60px;
+  left: -20px;
+  right: -20px;
+  height: 40px;
+  background: var(--yesil);
   border-radius: 50% 50% 0 0;
 }
 
-.ev {
+.dag {
   position: absolute;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 4em;
+  bottom: 80px;
+  left: 10%;
+  width: 60px;
+  height: 50px;
+  background: #2d3436;
+  border-radius: 50% 50% 0 0;
 }
 
-/* Kedi karakter */
-.kedi {
+.dag-2 {
+  left: 70%;
+  width: 80px;
+  height: 60px;
+}
+
+/* EV */
+.ev-b {
   position: absolute;
-  bottom: 50px;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.catı {
+  width: 0;
+  height: 0;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+  border-bottom: 35px solid #e17055;
+}
+
+.govde {
+  width: 70px;
+  height: 50px;
+  background: #fdcb6e;
+  border-radius: 5px 5px 0 0;
+}
+
+/* KEDİ */
+.kedi-sprite {
+  position: absolute;
+  bottom: 55px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 3.5em;
-  cursor: pointer;
   transition: all 0.3s;
-  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 8px 15px rgba(0,0,0,0.25));
+  cursor: pointer;
+  z-index: 5;
 }
 
-.kedi:hover {
-  transform: translateX(-50%) scale(1.1);
+.kedi-sprite:hover {
+  transform: translateX(-50%) scale(1.15);
 }
 
-.kedi.yurume {
-  animation: kediYurume 0.5s steps(2) infinite;
+.kedi-sprite.zıpla {
+  animation: kediZıpla 0.5s ease-in-out infinite;
 }
 
-@keyframes kediYurume {
-  0% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(-5px); }
-  100% { transform: translateX(-50%) translateY(0); }
+@keyframes kediZıpla {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-10px); }
 }
 
-/* Kalp particle */
-.kalp {
+/* PARTİKÜLLER */
+.party {
   position: absolute;
-  font-size: 1.5em;
-  animation: kalpUcus 1s ease-out forwards;
   pointer-events: none;
+  font-size: 2em;
+  z-index: 20;
 }
 
-@keyframes kalpUcus {
-  0% { opacity: 1; transform: translateY(0) scale(1); }
-  100% { opacity: 0; transform: translateY(-50px) scale(1.5); }
+@keyframes partyDüş {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(300px) rotate(360deg); opacity: 0; }
 }
 
-/* Soru kutusu */
+/* SORU KUTUSU */
 .soru-kutu {
-  background: linear-gradient(135deg, var(--lacivert) 0%, #6C5CE7 100%);
+  background: var(--beyaz);
   margin: 15px;
   border-radius: 25px;
-  padding: 20px;
+  padding: 25px;
   text-align: center;
-  color: white;
-  box-shadow: 0 10px 30px rgba(74, 105, 189, 0.3);
+  box-shadow: 
+    0 10px 0 #dfe6e9,
+    0 15px 30px rgba(0,0,0,0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.soru-kutu::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--pembe), var(--mavi), var(--yesil), var(--turuncu));
 }
 
 .soru-tip {
-  font-size: 0.85em;
-  opacity: 0.9;
+  font-size: 0.8em;
+  color: #636e72;
+  font-weight: 600;
   margin-bottom: 5px;
-  font-weight: 700;
-}
-
-.soru-metin {
-  font-size: 2.8em;
-  font-weight: 900;
+  text-transform: uppercase;
   letter-spacing: 2px;
 }
 
-/* Cevap girişi */
-.cevap-alani {
+.soru-metin {
+  font-size: 2.5em;
+  font-weight: 700;
+  color: var(--gri);
+}
+
+/* YANIT */
+.yanit-alani {
+  padding: 0 15px 15px;
   display: flex;
   gap: 10px;
-  justify-content: center;
-  padding: 15px;
 }
 
-.cevap-input {
-  font-family: 'Nunito', sans-serif;
-  font-size: 1.8em;
-  font-weight: 900;
-  width: 100px;
-  padding: 12px;
-  border: 4px solid var(--pembe);
-  border-radius: 15px;
+.yanit-input {
+  flex: 1;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.6em;
+  font-weight: 600;
+  padding: 15px;
+  border: 4px solid var(--duman);
+  border-radius: 20px;
   text-align: center;
   outline: none;
-  color: var(--lacivert);
-  background: var(--krem);
-}
-
-.cevap-input:focus {
-  border-color: var(--lacivert);
-  box-shadow: 0 0 20px rgba(74, 105, 189, 0.2);
-}
-
-.gonder-btn {
-  background: linear-gradient(135deg, var(--yesil) 0%, #27AE60 100%);
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 15px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 1.1em;
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+  background: var(--beyaz);
+  color: var(--gri);
   transition: all 0.2s;
 }
 
-.gonder-btn:hover {
-  transform: scale(1.05);
+.yanit-input:focus {
+  border-color: var(--mavi);
+  box-shadow: 0 0 0 4px rgba(84, 160, 255, 0.2);
 }
 
-.gonder-btn:active {
-  transform: scale(0.95);
-}
-
-/* Sonuç animasyonu */
-.sonuc {
-  text-align: center;
-  padding: 15px;
+.yanit-btn {
+  background: linear-gradient(180deg, var(--yesil), #10ac84);
+  color: var(--beyaz);
+  border: none;
+  padding: 15px 25px;
   border-radius: 20px;
-  margin: 10px 15px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.1em;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #189584, 0 8px 20px rgba(0,0,0,0.2);
+  transition: all 0.1s;
+}
+
+.yanit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 0 #189584, 0 12px 25px rgba(0,0,0,0.25);
+}
+
+.yanit-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #189584;
+}
+
+/* SONUÇ */
+.sonuc {
+  margin: 0 15px 15px;
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
   display: none;
 }
 
-.sonuc.dogru {
+.sonuc.goster {
   display: block;
-  background: linear-gradient(135deg, #D5F5E3 0%, #ABEBC6 100%);
-  animation: dogruAnim 0.5s ease-out;
+  animation: sonucGel 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.sonuc.yanlis {
-  display: block;
-  background: linear-gradient(135deg, #FADBD8 0%, #F5B7B1 100%);
-  animation: yanlisAnim 0.5s ease-out;
-}
-
-@keyframes dogruAnim {
-  0% { transform: scale(0.8); opacity: 0; }
-  50% { transform: scale(1.1); }
+@keyframes sonucGel {
+  0% { transform: scale(0.5); opacity: 0; }
   100% { transform: scale(1); opacity: 1; }
 }
 
-@keyframes yanlisAnim {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-10px); }
-  40%, 80% { transform: translateX(10px); }
+.sonuc.dogru {
+  background: linear-gradient(180deg, #55efc4, #00b894);
+  color: var(--beyaz);
+}
+
+.sonuc.yanlis {
+  background: linear-gradient(180deg, #ff7675, #d63031);
+  color: var(--beyaz);
 }
 
 .sonuc-icon {
@@ -331,388 +486,351 @@ body {
 .sonuc-text {
   font-size: 1.3em;
   font-weight: 700;
-  color: #2C3E50;
+  margin: 5px 0;
 }
 
-.puan-kazanc {
+.sonuc-puan {
   font-size: 1.5em;
-  font-weight: 900;
-  color: var(--yesil);
+  font-weight: 700;
 }
 
-/* Seviye atladın */
-.yeni-seviye {
-  background: linear-gradient(135deg, var(--sari) 0%, #F39C12 100%);
-  color: white;
-  text-align: center;
-  padding: 15px;
+/* SEVİYE ATLAMA */
+.seviye-atla {
+  margin: 0 15px;
+  background: linear-gradient(180deg, var(--turuncu), #f39c12);
+  color: var(--gri);
+  padding: 20px;
   border-radius: 20px;
-  margin: 10px 15px;
+  text-align: center;
   display: none;
 }
 
-.yeni-seviye.goster {
+.seviye-atla.goster {
   display: block;
-  animation: seviyePirlant 0.5s ease-out infinite alternate;
+  animation: seviyePırla 0.8s ease-in-out infinite alternate;
 }
 
-@keyframes seviyePirlant {
-  from { box-shadow: 0 0 10px var(--sari); }
-  to { box-shadow: 0 0 25px var(--sari), 0 0 40px var(--sari); }
+@keyframes seviyePırla {
+  from { box-shadow: 0 0 20px var(--turuncu); }
+  to { box-shadow: 0 0 40px var(--turuncu), 0 0 60px var(--pembe); }
 }
 
-/* Açılış ekranı */
-.acilis {
-  padding: 30px 20px;
-  text-align: center;
+.seviye-atla h3 {
+  font-size: 1.3em;
+  margin-bottom: 5px;
 }
 
-.kedi-hero {
-  font-size: 5em;
-  margin: 20px 0;
-  animation: kediSalla 2s ease-in-out infinite;
-}
-
-@keyframes kediSalla {
-  0%, 100% { transform: rotate(-5deg); }
-  50% { transform: rotate(5deg); }
-}
-
-.acilis h2 {
-  color: var(--lacivert);
-  font-size: 1.8em;
-  margin-bottom: 10px;
-}
-
-.acilis p {
-  color: #666;
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-
-.basla-btn {
-  background: linear-gradient(135deg, var(--pembe) 0%, var(--koyu-pembe) 100%);
-  color: white;
-  border: none;
-  padding: 18px 50px;
-  border-radius: 30px;
-  font-family: 'Nunito', sans-serif;
-  font-size: 1.4em;
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(255, 107, 129, 0.4);
-  transition: all 0.3s;
-}
-
-.basla-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(255, 107, 129, 0.5);
-}
-
-/* Bitiş ekranı */
-.bitis {
-  padding: 30px 20px;
-  text-align: center;
-}
-
-.bitis h2 {
-  color: var(--mor);
-  font-size: 2em;
-}
-
-.bitisti-tablo {
-  width: 100%;
-  margin: 20px 0;
-  border-collapse: collapse;
-}
-
-.bitisti-tablo th, .bitisti-tablo td {
-  padding: 12px;
-  text-align: center;
-  border-bottom: 2px dashed #ddd;
-}
-
-.bitisti-tablo th {
-  background: var(--krem);
-  color: var(--lacivert);
-  font-weight: 700;
-}
-
-.tesekkur {
-  background: linear-gradient(135deg, var(--pembe) 0%, var(--mor) 100%);
-  color: white;
-  padding: 20px;
-  border-radius: 20px;
-  margin: 20px 0;
-}
-
-.tesekkur p {
-  font-size: 1.2em;
-  font-weight: 700;
-}
-
-.gizle { display: none; }
-
-/* İlerleme çubuğu */
-.ilerleme {
-  height: 8px;
-  background: var(--krem);
-  margin: 0 15px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.ilerleme-bar {
-  height: 100%;
-  background: linear-gradient(90deg, var(--pembe), var(--mor));
-  border-radius: 10px;
-  transition: width 0.3s;
-}
-
-/* Seviye ipucu */
-.seviye-ipucu {
+/* İPUCU */
+.ipucu {
   text-align: center;
   padding: 10px;
   font-size: 0.85em;
-  color: #888;
-  font-weight: 700;
+  color: rgba(255,255,255,0.8);
+  font-weight: 600;
 }
+
+/* BİTİŞ */
+.bitis {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #a29bfe 0%, #6c5ce7 50%, #2d3436 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s;
+}
+
+.bitis.aktif {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bitis-madalyon {
+  width: 120px;
+  height: 120px;
+  background: var(--turuncu);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4em;
+  box-shadow: 
+    0 10px 0 #e1b12c,
+    0 15px 40px rgba(0,0,0,0.3);
+  margin-bottom: 30px;
+  animation: madalyonBounce 1s ease-out;
+}
+
+@keyframes madalyonBounce {
+  0% { transform: scale(0) rotate(-180deg); }
+  60% { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.bitis h2 {
+  color: var(--beyaz);
+  font-size: 1.8em;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* TABLO */
+.tablo {
+  background: var(--beyaz);
+  border-radius: 20px;
+  padding: 20px;
+  width: 80%;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.tablo-satır {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 2px dashed #dfe6e9;
+}
+
+.tablo-satır:last-child {
+  border-bottom: none;
+}
+
+.tablo-etiket {
+  color: #636e72;
+  font-weight: 600;
+}
+
+.tablo-deger {
+  color: var(--gri);
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.tesekkur {
+  background: var(--pembe);
+  color: var(--gri);
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+  width: 80%;
+}
+
+.tesekkur p {
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+.gizle { display: none !important; }
 </style>
 </head>
 <body>
 
-<div class="oyun-kutu">
-  <!-- Açılış Ekranı -->
-  <div id="acilis-ekrani">
-    <div class="header">
-      <div class="logo">
-        <span class="kedi-logo">🐱</span>
-        <h1>Mırnav'ın<br>Macerası</h1>
+<div class="telefon">
+  <div class="ekran">
+    <!-- ANASAYFA -->
+    <div class="anasayfa" id="anasayfa">
+      <div class="yuzuk">
+        <div class="kedi-anim">🐱</div>
       </div>
-    </div>
-    <div class="acilis">
-      <div class="kedi-hero">😺</div>
-      <h2>Hoş Geldin! 🌟</h2>
-      <p>Mırnav ile birlikte<br>odaları keşfet ve matematik öğren!</p>
-      <button class="basla-btn" onclick="oyunuBaslat()">🎮 BAŞLA!</button>
-    </div>
-  </div>
-
-  <!-- Oyun Ekranı -->
-  <div id="oyun-ekrani" class="gizle">
-    <div class="header">
-      <div class="logo">
-        <span class="kedi-logo">🐱</span>
-        <h1>Mırnav'ın<br>Macerası</h1>
+      <div class="baslik">
+        <h1>Mırnav'ın<br>Maceraları</h1>
+        <p>Her soru = Yeni bir oda!</p>
       </div>
+      <button class="basla-btn" onclick="oyunuBaslat()">🎮 BAŞLA</button>
     </div>
-    
-    <div class="stats">
-      <div class="stat">
-        <div class="stat-label">⭐ Puan</div>
-        <div class="stat-value" id="puan">0</div>
+
+    <!-- OYUN ALANI -->
+    <div class="oyun-alani" id="oyunAlani">
+      <div class="oyun-header">
+        <div class="logo-mini">
+          <span>🐱</span>
+          <h2>Mırnav</h2>
+        </div>
+        <div>
+          <span style="font-weight:700;color:var(--gri)">⭐ </span>
+          <span id="puan" style="font-weight:700;color:var(--gri)">0</span>
+        </div>
       </div>
-      <div class="stat">
-        <div class="stat-label">🚪 Oda</div>
-        <div class="stat-value" id="oda">1</div>
-      </div>
-      <div class="stat">
-        <div class="stat-label">🏆 Seviye</div>
-        <div class="stat-value" id="seviye">1</div>
-      </div>
-    </div>
-
-    <div class="ilerleme">
-      <div class="ilerleme-bar" id="ilerleme-bar" style="width: 7%"></div>
-    </div>
-
-    <div class="sahne" id="sahne">
-      <div class="bulut bulut-1"></div>
-      <div class="bulut bulut-2"></div>
-      <div class="zemin"></div>
-      <div class="kedi" id="kedi">🐱</div>
-    </div>
-
-    <div class="soru-kutu">
-      <div class="soru-tip" id="soru-tip">TOPLAMA</div>
-      <div class="soru-metin" id="soru-metin">5 + 3 = ?</div>
-    </div>
-
-    <div class="cevap-alani">
-      <input type="number" class="cevap-input" id="cevap" placeholder="?" onkeydown="if(event.key==='Enter')gonder()">
-      <button class="gonder-btn" onclick="gonder()">✅ TAMAM</button>
-    </div>
-
-    <div class="sonuc" id="sonuc">
-      <div class="sonuc-icon" id="sonuc-icon">🎉</div>
-      <div class="sonuc-text" id="sonuc-text">Doğru!</div>
-      <div class="puan-kazanc" id="puan-kazanc">+10 puan!</div>
-    </div>
-
-    <div class="yeni-seviye" id="yeni-seviye">
-      🚀 SEVİYE ATLADIN!<br>
-      <span id="yeni-seviye-text">Yeni bölüm açıldı!</span>
-    </div>
-
-    <div class="seviye-ipucu" id="seviye-ipucu">Seviye 1: Sadece TOPLAMA</div>
-  </div>
-
-  <!-- Bitiş Ekranı -->
-  <div id="bitis-ekrani" class="gizle">
-    <div class="header">
-      <div class="logo">
-        <span class="kedi-logo">😺</span>
-        <h1>Macera<br>Bitti!</h1>
-      </div>
-    </div>
-    <div class="bitis">
-      <div class="kedi-hero">🏆</div>
-      <h2>Elif Miray, SEN HARİKA'SIN! 🌟</h2>
       
-      <table class="bitisti-tablo">
-        <tr><th>📊</th><th>Sonuç</th></tr>
-        <tr><td>✅ Doğru</td><td id="b-dogru">0</td></tr>
-        <tr><td>❌ Yanlış</td><td id="b-yanlis">0</td></tr>
-        <tr><td>⭐ Puan</td><td id="b-puan">0</td></tr>
-        <tr><td>🏆 Seviye</td><td id="b-seviye">1</td></tr>
-      </table>
+      <div class="ilerleme">
+        <div class="ilerleme-bar" id="ilerlemeBar"></div>
+      </div>
+
+      <div class="sahne">
+        <div class="bulut bulut-1"></div>
+        <div class="bulut bulut-2"></div>
+        <div class="zemin">
+          <div class="tepe"></div>
+          <div class="dag dag-1"></div>
+          <div class="dag dag-2"></div>
+          <div class="ev-b">
+            <div class="catı"></div>
+            <div class="govde"></div>
+          </div>
+        </div>
+        <div class="kedi-sprite" id="kedi">🐱</div>
+      </div>
+
+      <div class="soru-kutu">
+        <div class="soru-tip" id="soruTip">TOPLAMA</div>
+        <div class="soru-metin" id="soruMetin">5 + 3 = ?</div>
+      </div>
+
+      <div class="yanit-alani">
+        <input type="number" class="yanit-input" id="yanitInput" placeholder="?" onkeydown="if(event.key==='Enter')gonder()">
+        <button class="yanit-btn" onclick="gonder()">TAMAM</button>
+      </div>
+
+      <div class="sonuc" id="sonuc">
+        <div class="sonuc-icon" id="sonucIcon">🎉</div>
+        <div class="sonuc-text" id="sonucText">Aferin!</div>
+        <div class="sonuc-puan" id="sonucPuan">+10</div>
+      </div>
+
+      <div class="seviye-atla" id="seviyeAtla">
+        <h3>🚀 YENİ SEVİYE!</h3>
+        <p id="seviyeMetin">Çarpma öğrendin!</p>
+      </div>
+
+      <div class="ipucu" id="ipucu">Seviye 1: Toplama</div>
+    </div>
+
+    <!-- BİTİŞ -->
+    <div class="bitis" id="bitis">
+      <div class="bitis-madalyon">🏆</div>
+      <h2>Macera Bitti!</h2>
+      
+      <div class="tablo">
+        <div class="tablo-satır">
+          <span class="tablo-etiket">✅ Doğru</span>
+          <span class="tablo-deger" id="bDogru">0</span>
+        </div>
+        <div class="tablo-satır">
+          <span class="tablo-etiket">❌ Yanlış</span>
+          <span class="tablo-deger" id="bYanlis">0</span>
+        </div>
+        <div class="tablo-satır">
+          <span class="tablo-etiket">⭐ Puan</span>
+          <span class="tablo-deger" id="bPuan">0</span>
+        </div>
+        <div class="tablo-satır">
+          <span class="tablo-etiket">🚀 Seviye</span>
+          <span class="tablo-deger" id="bSeviye">1</span>
+        </div>
+      </div>
 
       <div class="tesekkur">
-        <p>🐱 Mırnav:<br>"Seni çok sevdim Elif Miray!<br>Bir sonraki macereya görüşürüz! 👋"</p>
+        <p>🐱 Mırnav:<br>"Sen harikasın Elif Miray!<br>Bir sonraki macereya görüşürüz! 👋"</p>
       </div>
 
-      <button class="basla-btn" onclick="tekrarOyna()">🔄 TEKRAR OYNA</button>
+      <button class="basla-btn" onclick="tekrarOyna()">🔄 TEKRAR</button>
     </div>
   </div>
 </div>
 
 <script>
-// Kediler
-const KEDILER = ['🐱', '😺', '😻', '😽', '😼', '😸', '😾'];
-const KEDILER_ADI = ['Mırnav', 'Boncuk', 'Prenses', 'Paşa', 'Büyük', 'Korkak', 'Şanslı'];
+// Kediler ve efektleri
+const KEDILER = ['🐱', '😺', '😻', '😽', '😼', '😸'];
+const PARTİYKULER = ['💖', '⭐', '🌟', '✨', '💫'];
 
-// Oyun durumu
-let oyun = {
-  puan: 0,
-  seviye: 1,
-  oda: 1,
-  dogru: 0,
-  yanlis: 0,
-  maxOda: 15,
-  mevcutSoru: null
-};
+// Oyun
+let oyun = { puan: 0, seviye: 1, oda: 1, dogru: 0, yanlis: 0, maxOda: 15, soru: null };
 
 function oyunuBaslat() {
-  oyun = {puan: 0, seviye: 1, oda: 1, dogru: 0, yanlis: 0, maxOda: 15, mevcutSoru: null};
-  document.getElementById('acilis-ekrani').classList.add('gizle');
-  document.getElementById('bitis-ekrani').classList.add('gizle');
-  document.getElementById('oyun-ekrani').classList.remove('gizle');
+  oyun = { puan: 0, seviye: 1, oda: 1, dogru: 0, yanlis: 0, maxOda: 15, soru: null };
+  document.getElementById('anasayfa').classList.add('gizle');
+  document.getElementById('bitis').classList.remove('aktif');
+  document.getElementById('oyunAlani').classList.add('aktif');
   guncelle();
   yeniSoru();
 }
 
 function guncelle() {
   document.getElementById('puan').textContent = oyun.puan;
-  document.getElementById('oda').textContent = oyun.oda;
-  document.getElementById('seviye').textContent = oyun.seviye;
-  let ilerleme = (oyun.oda / oyun.maxOda) * 100;
-  document.getElementById('ilerleme-bar').style.width = ilerleme + '%';
+  document.getElementById('ilerlemeBar').style.width = (oyun.oda / oyun.maxOda * 100) + '%';
 }
 
-function soruUret(seviye) {
-  let islemler = seviye === 1 ? ['+'] : 
-                 seviye === 2 ? ['+', '+'] :
-                 seviye === 3 ? ['+', '-'] :
-                 seviye === 4 ? ['+', '-', '×'] :
-                 seviye === 5 ? ['×', '×', '×', '-'] : ['×', '÷', '×', '÷', '-', '+'];
-  
-  let islem = islemler[Math.floor(Math.random() * islemler.length)];
+function soruUret(s) {
+  let islemler = s === 1 ? ['+'] : s === 2 ? ['+'] : s === 3 ? ['+', '-'] : s === 4 ? ['+', '-', '×'] : s === 5 ? ['×', '×'] : ['×', '÷', '×'];
+  let op = islemler[Math.floor(Math.random() * islemler.length)];
   let a, b, cvp;
   
-  if (islem === '+') {
-    a = Math.floor(Math.random() * (10 * seviye)) + 1;
-    b = Math.floor(Math.random() * (10 * seviye)) + 1;
-    cvp = a + b;
-  } else if (islem === '-') {
-    a = Math.floor(Math.random() * (20 * seviye)) + 10;
-    b = Math.floor(Math.random() * a) + 1;
-    cvp = a - b;
-  } else if (islem === '×') {
-    a = [2,3,5,10][Math.floor(Math.random()*4)];
-    b = Math.floor(Math.random() * 5) + 1;
-    cvp = a * b;
-  } else {
-    b = Math.floor(Math.random() * 8) + 2;
-    cvp = Math.floor(Math.random() * 8) + 1;
-    a = b * cvp;
-  }
+  if (op === '+') { a = rand(1, 10*s); b = rand(1, 10*s); cvp = a+b; }
+  else if (op === '-') { a = rand(10, 20*s); b = rand(1, a); cvp = a-b; }
+  else if (op === '×') { a = [2,3,5,10][rand(0,3)]; b = rand(1, 5); cvp = a*b; }
+  else { b = rand(2, 8); cvp = rand(1, 8); a = b*cvp; }
   
-  let islemAdi = islem === '+' ? 'TOPLAMA' : islem === '-' ? 'ÇIKARMA' : islem === '×' ? 'ÇARPMA' : 'BÖLME';
-  let soru = islem === '+' ? a + ' + ' + b : islem === '-' ? a + ' - ' + b : islem === '×' ? a + ' × ' + b : a + ' ÷ ' + b;
-  
-  return {a, b, islem, cvp, soru: soru + ' = ?', islemAdi};
+  return {
+    a, b, op, cvp,
+    text: (op === '+' ? a+' + '+b : op === '-' ? a+' - '+b : op === '×' ? a+' × '+b : a+' ÷ '+b) + ' = ?',
+    tip: op === '+' ? 'TOPLAMA' : op === '-' ? 'ÇIKARMA' : op === '×' ? 'ÇARPMA' : 'BÖLME'
+  };
 }
 
+function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
 function yeniSoru() {
-  oyun.mevcutSoru = soruUret(oyun.seviye);
-  document.getElementById('soru-tip').textContent = oyun.mevcutSoru.islemAdi;
-  document.getElementById('soru-metin').textContent = oyun.mevcutSoru.soru;
+  oyun.soru = soruUret(oyun.seviye);
+  document.getElementById('soruTip').textContent = oyun.soru.tip;
+  document.getElementById('soruMetin').textContent = oyun.soru.text;
+  document.getElementById('yanitInput').value = '';
+  document.getElementById('yanitInput').focus();
+  document.getElementById('sonuc').className = 'sonuc gizle';
+  document.getElementById('seviyeAtla').classList.remove('goster');
   
   // Kedi değiş
-  let kedi = KEDILER[Math.floor(Math.random() * KEDILER.length)];
-  document.getElementById('kedi').textContent = kedi;
+  document.getElementById('kedi').textContent = KEDILER[rand(0, KEDILER.length-1)];
   
-  document.getElementById('cevap').value = '';
-  document.getElementById('cevap').focus();
-  document.getElementById('sonuc').style.display = 'none';
-  document.getElementById('yeni-seviye').classList.remove('goster');
-  
-  // Seviye ipucu
-  let ipucu = oyun.seviye <= 2 ? 'Toplama (+)' : 
-              oyun.seviye === 3 ? 'Toplama ve Çıkarma' :
-              oyun.seviye <= 5 ? 'Çarpma da var!' : 'Çarpma ve Bölme';
-  document.getElementById('seviye-ipucu').textContent = 'Seviye ' + oyun.seviye + ': ' + ipucu;
+  // İpucu
+  let ipucu = oyun.seviye <= 2 ? 'Toplama (+)' : oyun.seviye === 3 ? 'Çıkarma var!' : oyun.seviye <= 5 ? 'Çarpma da geldi!' : 'Bölme de öğren!';
+  document.getElementById('ipucu').textContent = 'Seviye ' + oyun.seviye + ': ' + ipucu;
 }
 
 function gonder() {
-  let cevap = parseInt(document.getElementById('cevap').value);
-  if (isNaN(cevap)) return;
+  let c = parseInt(document.getElementById('yanitInput').value);
+  if (isNaN(c)) return;
   
-  let dogruMu = cevap === oyun.mevcutSoru.cvp;
+  let dogrumu = c === oyun.soru.cvp;
   let sonuc = document.getElementById('sonuc');
   let kedi = document.getElementById('kedi');
   
-  if (dogruMu) {
+  if (dogrumu) {
     oyun.dogru++;
     oyun.puan += 10 * oyun.seviye;
     
-    sonuc.className = 'sonuc dogru';
-    document.getElementById('sonuc-icon').textContent = '🎉';
-    document.getElementById('sonuc-text').textContent = 'Aferin! Doğru!';
-    document.getElementById('puan-kazanc').textContent = '+' + (10 * oyun.seviye) + ' puan!';
+    sonuc.className = 'sonuc dogru goster';
+    document.getElementById('sonucIcon').textContent = '🎉';
+    document.getElementById('sonucText').textContent = 'Aferin!';
+    document.getElementById('sonucPuan').textContent = '+' + (10*oyun.seviye);
     
-    // Kalp animasyonu
-    kedi.innerHTML = '💖';
-    setTimeout(() => { kedi.textContent = KEDILER[Math.floor(Math.random() * KEDILER.length)]; }, 500);
+    // Party!
+    for(let i=0; i<5; i++) {
+      setTimeout(() => partyEkle(), i * 100);
+    }
     
-    // Seviye atlama kontrolü
+    // Kedi zıplasın
+    kedi.classList.add('zıpla');
+    setTimeout(() => kedi.classList.remove('zıpla'), 500);
+    
+    // Seviye kontrol
     if (oyun.puan >= oyun.seviye * 80) {
       oyun.seviye++;
-      let yeniSeviye = document.getElementById('yeni-seviye');
-      yeniSeviye.classList.add('goster');
-      let metin = oyun.seviye === 3 ? 'ÇIKARMA öğrendin!' :
-                  oyun.seviye === 4 ? 'ÇARPMA öğrendin!' :
-                  oyun.seviye === 6 ? 'BÖLME öğrendin!' : 'Yeni beceriler!';
-      document.getElementById('yeni-seviye-text').textContent = metin;
+      let atla = document.getElementById('seviyeAtla');
+      atla.classList.add('goster');
+      let metin = oyun.seviye === 3 ? 'ÇIKARMA öğrendin!' : oyun.seviye === 4 ? 'ÇARPMA öğrendin!' : oyun.seviye === 6 ? 'BÖLME öğrendin!' : 'Yeni beceriler!';
+      document.getElementById('seviyeMetin').textContent = metin;
     }
   } else {
     oyun.yanlis++;
-    sonuc.className = 'sonuc yanlis';
-    document.getElementById('sonuc-icon').textContent = '😢';
-    document.getElementById('sonuc-text').textContent = 'Yanlış... Doğru: ' + oyun.mevcutSoru.cvp;
-    document.getElementById('puan-kazanc').textContent = '';
+    sonuc.className = 'sonuc yanlis goster';
+    document.getElementById('sonucIcon').textContent = '😢';
+    document.getElementById('sonucText').textContent = 'Doğru: ' + oyun.soru.cvp;
+    document.getElementById('sonucPuan').textContent = '';
     kedi.textContent = '😿';
-    setTimeout(() => { kedi.textContent = KEDILER[Math.floor(Math.random() * KEDILER.length)]; }, 500);
   }
   
   sonuc.style.display = 'block';
@@ -724,27 +842,34 @@ function gonder() {
       guncelle();
       yeniSoru();
     } else {
-      oyunuBitir();
+      oyunBitis();
     }
   }, 1500);
 }
 
-function oyunuBitir() {
-  document.getElementById('oyun-ekrani').classList.add('gizle');
-  document.getElementById('bitis-ekrani').classList.remove('gizle');
-  document.getElementById('b-dogru').textContent = oyun.dogru;
-  document.getElementById('b-yanlis').textContent = oyun.yanlis;
-  document.getElementById('b-puan').textContent = oyun.puan;
-  document.getElementById('b-seviye').textContent = oyun.seviye;
+function partyEkle() {
+  let p = document.createElement('div');
+  p.className = 'party';
+  p.textContent = PARTİYKULER[rand(0, PARTİYKULER.length-1)];
+  p.style.left = (rand(20, 80)) + '%';
+  p.style.top = (rand(30, 60)) + '%';
+  p.style.animation = 'partyDüş 1s ease-out forwards';
+  document.getElementById('oyunAlani').appendChild(p);
+  setTimeout(() => p.remove(), 1000);
+}
+
+function oyunBitis() {
+  document.getElementById('oyunAlani').classList.remove('aktif');
+  document.getElementById('bitis').classList.add('aktif');
+  document.getElementById('bDogru').textContent = oyun.dogru;
+  document.getElementById('bYanlis').textContent = oyun.yanlis;
+  document.getElementById('bPuan').textContent = oyun.puan;
+  document.getElementById('bSeviye').textContent = oyun.seviye;
 }
 
 function tekrarOyna() {
   oyunuBaslat();
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Cloud animasyonları başlat
-});
 </script>
 </body>
 </html>
