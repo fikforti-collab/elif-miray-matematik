@@ -1,645 +1,750 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐱 Kedi Mutfağı - Elif Miray için Matematik Oyunu</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
-            background: linear-gradient(135deg, #FFE5D9 0%, #FFCAD4 50%, #DEBACE 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 600px;
-            width: 100%;
-            background: white;
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        }
-        
-        h1 {
-            text-align: center;
-            color: #E8819A;
-            font-size: 2.2em;
-            margin-bottom: 10px;
-        }
-        
-        .kedi-resim {
-            text-align: center;
-            font-size: 4em;
-            margin: 10px 0;
-            animation: sway 2s ease-in-out infinite;
-        }
-        
-        @keyframes sway {
-            0%, 100% { transform: rotate(-5deg); }
-            50% { transform: rotate(5deg); }
-        }
-        
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            background: #FFF0F5;
-            border-radius: 16px;
-            padding: 15px;
-            margin: 15px 0;
-        }
-        
-        .stat {
-            text-align: center;
-        }
-        
-        .stat-label {
-            font-size: 0.9em;
-            color: #888;
-        }
-        
-        .stat-value {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #E8819A;
-        }
-        
-        .musteri {
-            text-align: center;
-            padding: 20px;
-            background: #FFF8F0;
-            border-radius: 16px;
-            margin: 15px 0;
-        }
-        
-        .musteri-emoji {
-            font-size: 3em;
-        }
-        
-        .musteri-ad {
-            font-size: 1.3em;
-            color: #555;
-            margin-top: 8px;
-        }
-        
-        .yemek-istek {
-            font-size: 1.1em;
-            color: #FF6B6B;
-            margin-top: 5px;
-        }
-        
-        .soru-kutu {
-            text-align: center;
-            padding: 25px;
-            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
-            border-radius: 16px;
-            margin: 20px 0;
-            color: white;
-        }
-        
-        .soru-metni {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        
-        .soru-ipucu {
-            font-size: 0.9em;
-            opacity: 0.8;
-        }
-        
-        .cevap-girisi {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        
-        input[type="number"] {
-            font-size: 1.5em;
-            padding: 12px 20px;
-            border: 3px solid #E8819A;
-            border-radius: 12px;
-            width: 120px;
-            text-align: center;
-            outline: none;
-        }
-        
-        input[type="number"]:focus {
-            border-color: #FF6B9D;
-            box-shadow: 0 0 15px rgba(232, 129, 154, 0.3);
-        }
-        
-        button {
-            font-size: 1.3em;
-            padding: 12px 30px;
-            background: #E8819A;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        button:hover {
-            background: #FF6B9D;
-            transform: scale(1.05);
-        }
-        
-        button:active {
-            transform: scale(0.95);
-        }
-        
-        .sonuc {
-            text-align: center;
-            padding: 20px;
-            border-radius: 16px;
-            margin: 15px 0;
-            display: none;
-        }
-        
-        .sonuc.dogru {
-            display: block;
-            background: #D4EDDA;
-            color: #155724;
-        }
-        
-        .sonuc.yanlis {
-            display: block;
-            background: #F8D7DA;
-            color: #721C24;
-        }
-        
-        .sonuc-emoji {
-            font-size: 3em;
-        }
-        
-        .sonuc-ad {
-            font-size: 1.3em;
-            margin: 10px 0;
-        }
-        
-        .puan-kazanc {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #28A745;
-        }
-        
-        .yeni-seviye {
-            text-align: center;
-            padding: 15px;
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            border-radius: 16px;
-            margin: 15px 0;
-            display: none;
-            animation: pulse 0.5s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        
-        .yeni-seviye.goster {
-            display: block;
-        }
-        
-        .seviye-ipucu {
-            font-size: 0.9em;
-            color: #666;
-            text-align: center;
-            margin-top: 15px;
-        }
-        
-        .baslik-aciklama {
-            text-align: center;
-            color: #666;
-            font-size: 0.95em;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        th, td {
-            padding: 10px;
-            text-align: center;
-            border-bottom: 1px solid #eee;
-        }
-        
-        th {
-            background: #FFF0F5;
-            color: #E8819A;
-        }
-        
-        .temizle-btn {
-            background: #6C757D;
-            font-size: 0.9em;
-            padding: 8px 16px;
-        }
-        
-        .baslat-btn {
-            width: 100%;
-            font-size: 1.5em;
-            padding: 15px;
-            background: linear-gradient(135deg, #E8819A 0%, #FF6B9D 100%);
-        }
-        
-        #oyun-alani {
-            display: none;
-        }
-        
-        #bitis-ekrani {
-            display: none;
-            text-align: center;
-        }
-        
-        .basarim-list {
-            background: #FFF8E0;
-            border-radius: 16px;
-            padding: 20px;
-            margin: 15px 0;
-        }
-        
-        .basarim {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 0;
-            border-bottom: 1px dashed #ddd;
-        }
-        
-        .basarim:last-child {
-            border-bottom: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐱 Mırnav'ın Macerası - Elif Miray</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pembe: #FFB6C1;
+  --lacivert: #4A69BD;
+  --sari: #F9CA24;
+  --yesil: #78E08F;
+  --mor: #A55EEA;
+  --krem: #FFF5E6;
+  --koyu-pembe: #FF6B81;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(180deg, #E8F8F5 0%, #D4EFDF 50%, #A9DFBF 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  overflow-x: hidden;
+}
+
+.oyun-kutu {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(74, 105, 189, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, var(--pembe) 0%, var(--koyu-pembe) 100%);
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: white;
+  border-radius: 50% 50% 0 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.kedi-logo {
+  font-size: 3em;
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,0.2));
+  animation: zıpla 1s ease-in-out infinite;
+}
+
+@keyframes zıpla {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.logo h1 {
+  color: white;
+  font-size: 1.8em;
+  font-weight: 900;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Stats Bar */
+.stats {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 15px 30px;
+  background: white;
+  margin-top: -10px;
+  position: relative;
+  z-index: 1;
+}
+
+.stat {
+  text-align: center;
+  background: var(--krem);
+  padding: 12px 20px;
+  border-radius: 20px;
+  min-width: 90px;
+}
+
+.stat-label {
+  font-size: 0.75em;
+  color: #888;
+  font-weight: 700;
+}
+
+.stat-value {
+  font-size: 1.5em;
+  font-weight: 900;
+  color: var(--lacivert);
+}
+
+/* Oda / Sahne */
+.sahne {
+  height: 280px;
+  background: linear-gradient(180deg, #87CEEB 0%, #E0F4FF 100%);
+  position: relative;
+  overflow: hidden;
+  margin: 0 15px;
+  border-radius: 25px;
+}
+
+/* Bulut */
+.bulut {
+  position: absolute;
+  background: white;
+  border-radius: 50px;
+  opacity: 0.9;
+  animation: bulutHareket 20s linear infinite;
+}
+
+.bulut::before, .bulut::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.bulut-1 {
+  width: 80px; height: 30px;
+  top: 20px; left: -80px;
+}
+.bulut-1::before { width: 35px; height: 35px; top: -15px; left: 15px; }
+.bulut-1::after { width: 25px; height: 25px; top: -10px; left: 40px; }
+
+.bulut-2 {
+  width: 60px; height: 25px;
+  top: 50px; left: -60px;
+  animation-delay: -7s;
+}
+.bulut-2::before { width: 25px; height: 25px; top: -12px; left: 10px; }
+.bulut-2::after { width: 20px; height: 20px; top: -8px; left: 30px; }
+
+@keyframes bulutHareket {
+  from { transform: translateX(0); }
+  to { transform: translateX(500px); }
+}
+
+/* Zemindeki ev */
+.zemin {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(180deg, #90EE90 0%, #3CB371 100%);
+  border-radius: 50% 50% 0 0;
+}
+
+.ev {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 4em;
+}
+
+/* Kedi karakter */
+.kedi {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3.5em;
+  cursor: pointer;
+  transition: all 0.3s;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+}
+
+.kedi:hover {
+  transform: translateX(-50%) scale(1.1);
+}
+
+.kedi.yurume {
+  animation: kediYurume 0.5s steps(2) infinite;
+}
+
+@keyframes kediYurume {
+  0% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-5px); }
+  100% { transform: translateX(-50%) translateY(0); }
+}
+
+/* Kalp particle */
+.kalp {
+  position: absolute;
+  font-size: 1.5em;
+  animation: kalpUcus 1s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes kalpUcus {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-50px) scale(1.5); }
+}
+
+/* Soru kutusu */
+.soru-kutu {
+  background: linear-gradient(135deg, var(--lacivert) 0%, #6C5CE7 100%);
+  margin: 15px;
+  border-radius: 25px;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 10px 30px rgba(74, 105, 189, 0.3);
+}
+
+.soru-tip {
+  font-size: 0.85em;
+  opacity: 0.9;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.soru-metin {
+  font-size: 2.8em;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+/* Cevap girişi */
+.cevap-alani {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  padding: 15px;
+}
+
+.cevap-input {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.8em;
+  font-weight: 900;
+  width: 100px;
+  padding: 12px;
+  border: 4px solid var(--pembe);
+  border-radius: 15px;
+  text-align: center;
+  outline: none;
+  color: var(--lacivert);
+  background: var(--krem);
+}
+
+.cevap-input:focus {
+  border-color: var(--lacivert);
+  box-shadow: 0 0 20px rgba(74, 105, 189, 0.2);
+}
+
+.gonder-btn {
+  background: linear-gradient(135deg, var(--yesil) 0%, #27AE60 100%);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 15px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.1em;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+  transition: all 0.2s;
+}
+
+.gonder-btn:hover {
+  transform: scale(1.05);
+}
+
+.gonder-btn:active {
+  transform: scale(0.95);
+}
+
+/* Sonuç animasyonu */
+.sonuc {
+  text-align: center;
+  padding: 15px;
+  border-radius: 20px;
+  margin: 10px 15px;
+  display: none;
+}
+
+.sonuc.dogru {
+  display: block;
+  background: linear-gradient(135deg, #D5F5E3 0%, #ABEBC6 100%);
+  animation: dogruAnim 0.5s ease-out;
+}
+
+.sonuc.yanlis {
+  display: block;
+  background: linear-gradient(135deg, #FADBD8 0%, #F5B7B1 100%);
+  animation: yanlisAnim 0.5s ease-out;
+}
+
+@keyframes dogruAnim {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes yanlisAnim {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-10px); }
+  40%, 80% { transform: translateX(10px); }
+}
+
+.sonuc-icon {
+  font-size: 2.5em;
+}
+
+.sonuc-text {
+  font-size: 1.3em;
+  font-weight: 700;
+  color: #2C3E50;
+}
+
+.puan-kazanc {
+  font-size: 1.5em;
+  font-weight: 900;
+  color: var(--yesil);
+}
+
+/* Seviye atladın */
+.yeni-seviye {
+  background: linear-gradient(135deg, var(--sari) 0%, #F39C12 100%);
+  color: white;
+  text-align: center;
+  padding: 15px;
+  border-radius: 20px;
+  margin: 10px 15px;
+  display: none;
+}
+
+.yeni-seviye.goster {
+  display: block;
+  animation: seviyePirlant 0.5s ease-out infinite alternate;
+}
+
+@keyframes seviyePirlant {
+  from { box-shadow: 0 0 10px var(--sari); }
+  to { box-shadow: 0 0 25px var(--sari), 0 0 40px var(--sari); }
+}
+
+/* Açılış ekranı */
+.acilis {
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.kedi-hero {
+  font-size: 5em;
+  margin: 20px 0;
+  animation: kediSalla 2s ease-in-out infinite;
+}
+
+@keyframes kediSalla {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+.acilis h2 {
+  color: var(--lacivert);
+  font-size: 1.8em;
+  margin-bottom: 10px;
+}
+
+.acilis p {
+  color: #666;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.basla-btn {
+  background: linear-gradient(135deg, var(--pembe) 0%, var(--koyu-pembe) 100%);
+  color: white;
+  border: none;
+  padding: 18px 50px;
+  border-radius: 30px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.4em;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(255, 107, 129, 0.4);
+  transition: all 0.3s;
+}
+
+.basla-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(255, 107, 129, 0.5);
+}
+
+/* Bitiş ekranı */
+.bitis {
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.bitis h2 {
+  color: var(--mor);
+  font-size: 2em;
+}
+
+.bitisti-tablo {
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+}
+
+.bitisti-tablo th, .bitisti-tablo td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 2px dashed #ddd;
+}
+
+.bitisti-tablo th {
+  background: var(--krem);
+  color: var(--lacivert);
+  font-weight: 700;
+}
+
+.tesekkur {
+  background: linear-gradient(135deg, var(--pembe) 0%, var(--mor) 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  margin: 20px 0;
+}
+
+.tesekkur p {
+  font-size: 1.2em;
+  font-weight: 700;
+}
+
+.gizle { display: none; }
+
+/* İlerleme çubuğu */
+.ilerleme {
+  height: 8px;
+  background: var(--krem);
+  margin: 0 15px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ilerleme-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--pembe), var(--mor));
+  border-radius: 10px;
+  transition: width 0.3s;
+}
+
+/* Seviye ipucu */
+.seviye-ipucu {
+  text-align: center;
+  padding: 10px;
+  font-size: 0.85em;
+  color: #888;
+  font-weight: 700;
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- Başlangıç Ekranı -->
-        <div id="baslangic-ekrani">
-            <div class="kedi-resim">🐱🌮</div>
-            <h1>🐱 Kedi Mutfağı 🌮</h1>
-            <p class="baslik-aciklama">Elif Miray için Matematik Oyunu</p>
-            
-            <div style="text-align: center; margin: 30px 0;">
-                <p style="font-size: 1.2em; color: #555; margin-bottom: 15px;">
-                    😺 Merhaba Elif Miray! 🐱<br>
-                    Restoranımızı açıyoruz!
-                </p>
-                <p style="color: #888;">
-                    Her doğru cevapta müşteri kedilere yemek pişireceğiz!<br>
-                    + - × ÷ hepsini öğreneceğiz!
-                </p>
-            </div>
-            
-            <button class="baslat-btn" onclick="oyunuBaslat()">🎮 OYUNA BAŞLA!</button>
-        </div>
-        
-        <!-- Oyun Alanı -->
-        <div id="oyun-alani">
-            <div class="kedi-resim">🐱</div>
-            <h1>🐱 Kedi Mutfağı 🌮</h1>
-            <p class="baslik-aciklama">Şef Pofuduk'un Restoranı</p>
-            
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-label">🏆 Puan</div>
-                    <div class="stat-value" id="puan-goster">0</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">📊 Tur</div>
-                    <div class="stat-value" id="tur-goster">1</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-label">🚀 Seviye</div>
-                    <div class="stat-value" id="seviye-goster">1</div>
-                </div>
-            </div>
-            
-            <div class="musteri">
-                <div class="musteri-emoji" id="musteri-emoji">😺</div>
-                <div class="musteri-ad" id="musteri-ad">Mırnav</div>
-                <div class="yemek-istek" id="yemek-istek">🍕 pizza istiyorum!</div>
-            </div>
-            
-            <div class="soru-kutu">
-                <div class="soru-ipucu" id="islem-adi">TOPLAMA</div>
-                <div class="soru-metni" id="soru-metni">5 + 3 = ?</div>
-            </div>
-            
-            <div class="cevap-girisi">
-                <input type="number" id="cevap-input" placeholder="?" onkeydown="tusKontrol(event)">
-                <button onclick="cevabiKontrol()">✅ Gönder</button>
-            </div>
-            
-            <div class="sonuc" id="sonuc-kutu">
-                <div class="sonuc-emoji" id="sonuc-emoji">🎉</div>
-                <div class="sonuc-ad" id="sonuc-ad">Doğru!</div>
-                <div class="puan-kazanc" id="puan-kazanc">+10 puan!</div>
-            </div>
-            
-            <div class="yeni-seviye" id="yeni-seviye-kutu">
-                🚀 SEVİYE ATLADIN!<br>
-                <span id="yeni-seviye-ad">ÇIKARMA öğrendin!</span>
-            </div>
-            
-            <p class="seviye-ipucu" id="seviye-ipucu">Seviye 1: Sadece TOPLAMA (+)</p>
-        </div>
-        
-        <!-- Bitiş Ekranı -->
-        <div id="bitis-ekrani">
-            <div class="kedi-resim">😺🌮</div>
-            <h1>🎉 OYUN BİTTİ! 🎉</h1>
-            
-            <table>
-                <tr>
-                    <th>📊 İstatistik</th>
-                    <th>Değer</th>
-                </tr>
-                <tr>
-                    <td>✅ Doğru Cevap</td>
-                    <td id="bitis-dogru">0</td>
-                </tr>
-                <tr>
-                    <td>❌ Yanlış</td>
-                    <td id="bitis-yANLIS">0</td>
-                </tr>
-                <tr>
-                    <td>🏆 Puan</td>
-                    <td id="bitis-puan">0</td>
-                </tr>
-                <tr>
-                    <td>🚀 Son Seviye</td>
-                    <td id="bitis-seviye">1</td>
-                </tr>
-            </table>
-            
-            <div class="basarim-list">
-                <h3>🏆 Başarımların:</h3>
-                <div id="basarimlar"></div>
-            </div>
-            
-            <div style="margin-top: 20px;">
-                <p style="font-size: 1.3em; color: #E8819A;">
-                    🐱🌮 Şef Pofuduk:<br>
-                    "Aferin Elif Miray! SENİ ÇOK SEVDİM! 👋"
-                </p>
-            </div>
-            
-            <button class="baslat-btn" style="margin-top: 20px;" onclick="tekrarOyna()">🔄 TEKRAR OYNA</button>
-        </div>
+
+<div class="oyun-kutu">
+  <!-- Açılış Ekranı -->
+  <div id="acilis-ekrani">
+    <div class="header">
+      <div class="logo">
+        <span class="kedi-logo">🐱</span>
+        <h1>Mırnav'ın<br>Macerası</h1>
+      </div>
+    </div>
+    <div class="acilis">
+      <div class="kedi-hero">😺</div>
+      <h2>Hoş Geldin! 🌟</h2>
+      <p>Mırnav ile birlikte<br>odaları keşfet ve matematik öğren!</p>
+      <button class="basla-btn" onclick="oyunuBaslat()">🎮 BAŞLA!</button>
+    </div>
+  </div>
+
+  <!-- Oyun Ekranı -->
+  <div id="oyun-ekrani" class="gizle">
+    <div class="header">
+      <div class="logo">
+        <span class="kedi-logo">🐱</span>
+        <h1>Mırnav'ın<br>Macerası</h1>
+      </div>
     </div>
     
-    <script>
-        // 🎨 Kediler
-        const KEDILER = [
-            {emoji: "🐱", ad: "Şef Pofuduk", aciklama: "Şef kedi"},
-            {emoji: "😺", ad: "Mırnav", aciklama: "Neşeli kedi"},
-            {emoji: "😼", ad: "Patron Kedi", aciklama: "Müşteri kedi"},
-            {emoji: "😻", ad: "Boncuk", aciklama: "Küçük kedi"},
-            {emoji: "😽", ad: "Prenses", aciklama: "Nazlı kedi"},
-            {emoji: "😾", ad: "Korkak Kedi", aciklama: "Korkak ama tatlı"},
-            {emoji: "😸", ad: "Büyük Kedi", aciklama: "Bilge kedi"},
-            {emoji: "😿", ad: "Üzgün Kedi", aciklama: "Hayal kırıklığı"},
-        ];
-        
-        // 🍽️ Yemekler
-        const YEMEKLER = [
-            "🍕 pizza", "🍝 makarna", "🍔 burger", 
-            "🌮 taco", "🍣 sushi", "🧁 kurabiye",
-            "🥣 çorba", "🥞 wafle", "🍦 dondurma",
-            "🥪 sandviç", "🍟 patates", "🍜 erişte"
-        ];
-        
-        // Oyun durumu
-        let oyun = {
-            puan: 0,
-            seviye: 1,
-            tur: 1,
-            dogru: 0,
-            yanlis: 0,
-            toplamTur: 15,
-            mevcutSoru: null,
-            OncekiSeviye: 1
-        };
-        
-        function oyunuBaslat() {
-            // Reset
-            oyun = {
-                puan: 0,
-                seviye: 1,
-                tur: 1,
-                dogru: 0,
-                yanlis: 0,
-                toplamTur: 15,
-                mevcutSoru: null,
-                OncekiSeviye: 1
-            };
-            
-            document.getElementById('baslangic-ekrani').style.display = 'none';
-            document.getElementById('bitis-ekrani').style.display = 'none';
-            document.getElementById('oyun-alani').style.display = 'block';
-            
-            gostergeGuncelle();
-            yeniSoru();
-        }
-        
-        function gostergeGuncelle() {
-            document.getElementById('puan-goster').textContent = oyun.puan;
-            document.getElementById('tur-goster').textContent = oyun.tur;
-            document.getElementById('seviye-goster').textContent = oyun.seviye;
-        }
-        
-        function soruUret(seviye) {
-            let islemler = [];
-            
-            if (seviye === 1) islemler = ["+"];
-            else if (seviye === 2) islemler = ["+", "+"];
-            else if (seviye === 3) islemler = ["+", "-"];
-            else if (seviye === 4) islemler = ["+", "-", "×"];
-            else if (seviye === 5) islemler = ["×", "×", "×", "-"];
-            else islemler = ["×", "÷", "×", "÷", "-", "+"];
-            
-            const islem = islemler[Math.floor(Math.random() * islemler.length)];
-            let a, b, cvp;
-            
-            if (islem === "+") {
-                a = Math.floor(Math.random() * (10 * seviye)) + 1;
-                b = Math.floor(Math.random() * (10 * seviye)) + 1;
-                cvp = a + b;
-                return {a, b, islem, cvp, islemAdi: "TOPLAMA (+)"};
-            } 
-            else if (islem === "-") {
-                a = Math.floor(Math.random() * (20 * seviye)) + 10;
-                b = Math.floor(Math.random() * a) + 1;
-                cvp = a - b;
-                return {a, b, islem, cvp, islemAdi: "ÇIKARMA (-)"};
-            } 
-            else if (islem === "×") {
-                if (seviye <= 4) {
-                    a = [2, 3, 5, 10][Math.floor(Math.random() * 4)];
-                    b = Math.floor(Math.random() * 5) + 1;
-                } else {
-                    a = Math.floor(Math.random() * Math.min(9, seviye)) + 2;
-                    b = Math.floor(Math.random() * Math.min(10, seviye + 3)) + 1;
-                }
-                cvp = a * b;
-                return {a, b, islem, cvp, islemAdi: "ÇARPMA (×)"};
-            } 
-            else if (islem === "÷") {
-                b = Math.floor(Math.random() * Math.min(9, seviye + 1)) + 2;
-                cvp = Math.floor(Math.random() * Math.min(10, seviye + 2)) + 1;
-                a = b * cvp;
-                return {a, b, islem, cvp, islemAdi: "BÖLME (÷)"};
-            }
-        }
-        
-        function yeniSoru() {
-            // Yeni soru üret
-            oyun.mevcutSoru = soruUret(oyun.seviye);
-            
-            // Müşteri seç
-            const kedi = KEDILER[Math.floor(Math.random() * KEDILER.length)];
-            const yemek = YEMEKLER[Math.floor(Math.random() * YEMEKLER.length)];
-            
-            document.getElementById('musteri-emoji').textContent = kedi.emoji;
-            document.getElementById('musteri-ad').textContent = kedi.ad + " diyor ki:";
-            document.getElementById('yemek-istek').textContent = yemek + " istiyorum! 🍴";
-            
-            // Soruyu göster
-            let soruMetin = "";
-            if (oyun.mevcutSoru.islem === "+") soruMetin = oyun.mevcutSoru.a + " + " + oyun.mevcutSoru.b;
-            else if (oyun.mevcutSoru.islem === "-") soruMetin = oyun.mevcutSoru.a + " - " + oyun.mevcutSoru.b;
-            else if (oyun.mevcutSoru.islem === "×") soruMetin = oyun.mevcutSoru.a + " × " + oyun.mevcutSoru.b;
-            else soruMetin = oyun.mevcutSoru.a + " ÷ " + oyun.mevcutSoru.b;
-            
-            document.getElementById('islem-adi').textContent = oyun.mevcutSoru.islemAdi;
-            document.getElementById('soru-metni').textContent = soruMetin + " = ?";
-            
-            // Seviye ipucu
-            let ipucu = "";
-            if (oyun.seviye === 1) ipucu = "Seviye 1: Sadece TOPLAMA (+)";
-            else if (oyun.seviye === 2) ipucu = "Seviye 2: TOPLAMA (+)";
-            else if (oyun.seviye === 3) ipucu = "Seviye 3: + TOPLAMA ve - ÇIKARMA";
-            else if (oyun.seviye === 4) ipucu = "Seviye 4: + - ve × ÇARPMA";
-            else if (oyun.seviye === 5) ipucu = "Seviye 5: × ÇARPMA (büyük sayılar)";
-            else ipucu = "Seviye 6+: × ÇARPMA ve ÷ BÖLME";
-            document.getElementById('seviye-ipucu').textContent = ipucu;
-            
-            // Input temizle
-            document.getElementById('cevap-input').value = "";
-            document.getElementById('cevap-input').focus();
-            
-            // Sonuçları gizle
-            document.getElementById('sonuc-kutu').style.display = 'none';
-            document.getElementById('yeni-seviye-kutu').classList.remove('goster');
-        }
-        
-        function cevabiKontrol() {
-            const girdi = document.getElementById('cevap-input');
-            const cevap = parseInt(girdi.value);
-            
-            if (isNaN(cevap)) {
-                alert("😵 Bir sayı girmelisin!");
-                return;
-            }
-            
-            const dogruMu = cevap === oyun.mevcutSoru.cvp;
-            const sonucKutu = document.getElementById('sonuc-kutu');
-            
-            if (dogruMu) {
-                oyun.dogru++;
-                const kazanc = 10 * oyun.seviye;
-                oyun.puan += kazanc;
-                
-                sonucKutu.className = "sonuc dogru";
-                document.getElementById('sonuc-emoji').textContent = "🎉";
-                document.getElementById('sonuc-ad').textContent = "DOĞRU!";
-                document.getElementById('puan-kazanc').textContent = "+" + kazanc + " puan!";
-                
-                // Seviye kontrol
-                oyun.OncekiSeviye = oyun.seviye;
-                if (oyun.puan >= oyun.seviye * 80) {
-                    oyun.seviye++;
-                    
-                    const seviyeKutu = document.getElementById('yeni-seviye-kutu');
-                    seviyeKutu.classList.add('goster');
-                    
-                    let yeniAd = "";
-                    if (oyun.seviye === 3) yeniAd = "🆕 ÇIKARMA (-) öğrendin!";
-                    else if (oyun.seviye === 4) yeniAd = "🆕 ÇARPMA (×) öğrendin!";
-                    else if (oyun.seviye === 6) yeniAd = "🆕 BÖLME (÷) öğrendin!";
-                    else yeniAd = "Yeni seviye: " + oyun.seviye;
-                    
-                    document.getElementById('yeni-seviye-ad').textContent = yeniAd;
-                }
-            } else {
-                oyun.yanlis++;
-                sonucKutu.className = "sonuc yanlis";
-                document.getElementById('sonuc-emoji').textContent = "😢";
-                document.getElementById('sonuc-ad').textContent = "Yanlış... Doğru cevap: " + oyun.mevcutSoru.cvp;
-                document.getElementById('puan-kazanc').textContent = "";
-            }
-            
-            sonucKutu.style.display = 'block';
-            gostergeGuncelle();
-            
-            // Sonraki tur
-            setTimeout(() => {
-                if (oyun.tur < oyun.toplamTur) {
-                    oyun.tur++;
-                    gostergeGuncelle();
-                    yeniSoru();
-                } else {
-                    oyunuBitir();
-                }
-            }, 1500);
-        }
-        
-        function tusKontrol(e) {
-            if (e.key === "Enter") {
-                cevabiKontrol();
-            }
-        }
-        
-        function oyunuBitir() {
-            document.getElementById('oyun-alani').style.display = 'none';
-            document.getElementById('bitis-ekrani').style.display = 'block';
-            
-            document.getElementById('bitis-dogru').textContent = oyun.dogru;
-            document.getElementById('bitis-yANLIS').textContent = oyun.yanlis;
-            document.getElementById('bitis-puan').textContent = oyun.puan;
-            document.getElementById('bitis-seviye').textContent = oyun.seviye;
-            
-            // Başarımlar
-            let basarimlar = "";
-            
-            if (oyun.dogru >= 10) basarimlar += "<div class='basarim'>🥇 💯 10+ soru doğru!</div>";
-            if (oyun.dogru >= 13) basarimlar += "<div class='basarim'>⭐ 🔥 Neredeyse mükemmel!</div>";
-            if (oyun.puan >= 200) basarimlar += "<div class='basarim'>🏆 200+ puan!</div>";
-            if (oyun.seviye >= 3) basarimlar += "<div class='basarim'>📈 Seviye 3+ gittin!</div>";
-            if (oyun.yanlis === 0) basarimlar += "<div class='basarim'>👑 HİÇ YANLIŞIN YOK!</div>";
-            
-            if (basarimlar === "") basarimlar = "<div class='basarim'>🎮 Güzel oynadın!</div>";
-            
-            document.getElementById('basarimlar').innerHTML = basarimlar;
-        }
-        
-        function tekrarOyna() {
-            oyunuBaslat();
-        }
-    </script>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-label">⭐ Puan</div>
+        <div class="stat-value" id="puan">0</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">🚪 Oda</div>
+        <div class="stat-value" id="oda">1</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">🏆 Seviye</div>
+        <div class="stat-value" id="seviye">1</div>
+      </div>
+    </div>
+
+    <div class="ilerleme">
+      <div class="ilerleme-bar" id="ilerleme-bar" style="width: 7%"></div>
+    </div>
+
+    <div class="sahne" id="sahne">
+      <div class="bulut bulut-1"></div>
+      <div class="bulut bulut-2"></div>
+      <div class="zemin"></div>
+      <div class="kedi" id="kedi">🐱</div>
+    </div>
+
+    <div class="soru-kutu">
+      <div class="soru-tip" id="soru-tip">TOPLAMA</div>
+      <div class="soru-metin" id="soru-metin">5 + 3 = ?</div>
+    </div>
+
+    <div class="cevap-alani">
+      <input type="number" class="cevap-input" id="cevap" placeholder="?" onkeydown="if(event.key==='Enter')gonder()">
+      <button class="gonder-btn" onclick="gonder()">✅ TAMAM</button>
+    </div>
+
+    <div class="sonuc" id="sonuc">
+      <div class="sonuc-icon" id="sonuc-icon">🎉</div>
+      <div class="sonuc-text" id="sonuc-text">Doğru!</div>
+      <div class="puan-kazanc" id="puan-kazanc">+10 puan!</div>
+    </div>
+
+    <div class="yeni-seviye" id="yeni-seviye">
+      🚀 SEVİYE ATLADIN!<br>
+      <span id="yeni-seviye-text">Yeni bölüm açıldı!</span>
+    </div>
+
+    <div class="seviye-ipucu" id="seviye-ipucu">Seviye 1: Sadece TOPLAMA</div>
+  </div>
+
+  <!-- Bitiş Ekranı -->
+  <div id="bitis-ekrani" class="gizle">
+    <div class="header">
+      <div class="logo">
+        <span class="kedi-logo">😺</span>
+        <h1>Macera<br>Bitti!</h1>
+      </div>
+    </div>
+    <div class="bitis">
+      <div class="kedi-hero">🏆</div>
+      <h2>Elif Miray, SEN HARİKA'SIN! 🌟</h2>
+      
+      <table class="bitisti-tablo">
+        <tr><th>📊</th><th>Sonuç</th></tr>
+        <tr><td>✅ Doğru</td><td id="b-dogru">0</td></tr>
+        <tr><td>❌ Yanlış</td><td id="b-yanlis">0</td></tr>
+        <tr><td>⭐ Puan</td><td id="b-puan">0</td></tr>
+        <tr><td>🏆 Seviye</td><td id="b-seviye">1</td></tr>
+      </table>
+
+      <div class="tesekkur">
+        <p>🐱 Mırnav:<br>"Seni çok sevdim Elif Miray!<br>Bir sonraki macereya görüşürüz! 👋"</p>
+      </div>
+
+      <button class="basla-btn" onclick="tekrarOyna()">🔄 TEKRAR OYNA</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Kediler
+const KEDILER = ['🐱', '😺', '😻', '😽', '😼', '😸', '😾'];
+const KEDILER_ADI = ['Mırnav', 'Boncuk', 'Prenses', 'Paşa', 'Büyük', 'Korkak', 'Şanslı'];
+
+// Oyun durumu
+let oyun = {
+  puan: 0,
+  seviye: 1,
+  oda: 1,
+  dogru: 0,
+  yanlis: 0,
+  maxOda: 15,
+  mevcutSoru: null
+};
+
+function oyunuBaslat() {
+  oyun = {puan: 0, seviye: 1, oda: 1, dogru: 0, yanlis: 0, maxOda: 15, mevcutSoru: null};
+  document.getElementById('acilis-ekrani').classList.add('gizle');
+  document.getElementById('bitis-ekrani').classList.add('gizle');
+  document.getElementById('oyun-ekrani').classList.remove('gizle');
+  guncelle();
+  yeniSoru();
+}
+
+function guncelle() {
+  document.getElementById('puan').textContent = oyun.puan;
+  document.getElementById('oda').textContent = oyun.oda;
+  document.getElementById('seviye').textContent = oyun.seviye;
+  let ilerleme = (oyun.oda / oyun.maxOda) * 100;
+  document.getElementById('ilerleme-bar').style.width = ilerleme + '%';
+}
+
+function soruUret(seviye) {
+  let islemler = seviye === 1 ? ['+'] : 
+                 seviye === 2 ? ['+', '+'] :
+                 seviye === 3 ? ['+', '-'] :
+                 seviye === 4 ? ['+', '-', '×'] :
+                 seviye === 5 ? ['×', '×', '×', '-'] : ['×', '÷', '×', '÷', '-', '+'];
+  
+  let islem = islemler[Math.floor(Math.random() * islemler.length)];
+  let a, b, cvp;
+  
+  if (islem === '+') {
+    a = Math.floor(Math.random() * (10 * seviye)) + 1;
+    b = Math.floor(Math.random() * (10 * seviye)) + 1;
+    cvp = a + b;
+  } else if (islem === '-') {
+    a = Math.floor(Math.random() * (20 * seviye)) + 10;
+    b = Math.floor(Math.random() * a) + 1;
+    cvp = a - b;
+  } else if (islem === '×') {
+    a = [2,3,5,10][Math.floor(Math.random()*4)];
+    b = Math.floor(Math.random() * 5) + 1;
+    cvp = a * b;
+  } else {
+    b = Math.floor(Math.random() * 8) + 2;
+    cvp = Math.floor(Math.random() * 8) + 1;
+    a = b * cvp;
+  }
+  
+  let islemAdi = islem === '+' ? 'TOPLAMA' : islem === '-' ? 'ÇIKARMA' : islem === '×' ? 'ÇARPMA' : 'BÖLME';
+  let soru = islem === '+' ? a + ' + ' + b : islem === '-' ? a + ' - ' + b : islem === '×' ? a + ' × ' + b : a + ' ÷ ' + b;
+  
+  return {a, b, islem, cvp, soru: soru + ' = ?', islemAdi};
+}
+
+function yeniSoru() {
+  oyun.mevcutSoru = soruUret(oyun.seviye);
+  document.getElementById('soru-tip').textContent = oyun.mevcutSoru.islemAdi;
+  document.getElementById('soru-metin').textContent = oyun.mevcutSoru.soru;
+  
+  // Kedi değiş
+  let kedi = KEDILER[Math.floor(Math.random() * KEDILER.length)];
+  document.getElementById('kedi').textContent = kedi;
+  
+  document.getElementById('cevap').value = '';
+  document.getElementById('cevap').focus();
+  document.getElementById('sonuc').style.display = 'none';
+  document.getElementById('yeni-seviye').classList.remove('goster');
+  
+  // Seviye ipucu
+  let ipucu = oyun.seviye <= 2 ? 'Toplama (+)' : 
+              oyun.seviye === 3 ? 'Toplama ve Çıkarma' :
+              oyun.seviye <= 5 ? 'Çarpma da var!' : 'Çarpma ve Bölme';
+  document.getElementById('seviye-ipucu').textContent = 'Seviye ' + oyun.seviye + ': ' + ipucu;
+}
+
+function gonder() {
+  let cevap = parseInt(document.getElementById('cevap').value);
+  if (isNaN(cevap)) return;
+  
+  let dogruMu = cevap === oyun.mevcutSoru.cvp;
+  let sonuc = document.getElementById('sonuc');
+  let kedi = document.getElementById('kedi');
+  
+  if (dogruMu) {
+    oyun.dogru++;
+    oyun.puan += 10 * oyun.seviye;
+    
+    sonuc.className = 'sonuc dogru';
+    document.getElementById('sonuc-icon').textContent = '🎉';
+    document.getElementById('sonuc-text').textContent = 'Aferin! Doğru!';
+    document.getElementById('puan-kazanc').textContent = '+' + (10 * oyun.seviye) + ' puan!';
+    
+    // Kalp animasyonu
+    kedi.innerHTML = '💖';
+    setTimeout(() => { kedi.textContent = KEDILER[Math.floor(Math.random() * KEDILER.length)]; }, 500);
+    
+    // Seviye atlama kontrolü
+    if (oyun.puan >= oyun.seviye * 80) {
+      oyun.seviye++;
+      let yeniSeviye = document.getElementById('yeni-seviye');
+      yeniSeviye.classList.add('goster');
+      let metin = oyun.seviye === 3 ? 'ÇIKARMA öğrendin!' :
+                  oyun.seviye === 4 ? 'ÇARPMA öğrendin!' :
+                  oyun.seviye === 6 ? 'BÖLME öğrendin!' : 'Yeni beceriler!';
+      document.getElementById('yeni-seviye-text').textContent = metin;
+    }
+  } else {
+    oyun.yanlis++;
+    sonuc.className = 'sonuc yanlis';
+    document.getElementById('sonuc-icon').textContent = '😢';
+    document.getElementById('sonuc-text').textContent = 'Yanlış... Doğru: ' + oyun.mevcutSoru.cvp;
+    document.getElementById('puan-kazanc').textContent = '';
+    kedi.textContent = '😿';
+    setTimeout(() => { kedi.textContent = KEDILER[Math.floor(Math.random() * KEDILER.length)]; }, 500);
+  }
+  
+  sonuc.style.display = 'block';
+  guncelle();
+  
+  setTimeout(() => {
+    if (oyun.oda < oyun.maxOda) {
+      oyun.oda++;
+      guncelle();
+      yeniSoru();
+    } else {
+      oyunuBitir();
+    }
+  }, 1500);
+}
+
+function oyunuBitir() {
+  document.getElementById('oyun-ekrani').classList.add('gizle');
+  document.getElementById('bitis-ekrani').classList.remove('gizle');
+  document.getElementById('b-dogru').textContent = oyun.dogru;
+  document.getElementById('b-yanlis').textContent = oyun.yanlis;
+  document.getElementById('b-puan').textContent = oyun.puan;
+  document.getElementById('b-seviye').textContent = oyun.seviye;
+}
+
+function tekrarOyna() {
+  oyunuBaslat();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Cloud animasyonları başlat
+});
+</script>
 </body>
 </html>
